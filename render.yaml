@@ -1,0 +1,35 @@
+# Render Blueprint: deploys the API (free plan). The website goes on Vercel/Netlify; see DEPLOY.md.
+services:
+  - type: web
+    name: sricr-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: TRUST_PROXY
+        value: 1
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false        # e.g. https://sricr.vercel.app (comma-separate more, e.g. ,https://sricr.com)
+      - key: BUSINESS_TIMEZONE
+        value: Asia/Kolkata
+      - key: SMTP_HOST
+        value: smtp-relay.brevo.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_SECURE
+        value: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: MAIL_FROM
+        sync: false
